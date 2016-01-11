@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no"/>
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="./js/excanvas.js"></script>
+        <script src="./js/json.js"></script>
+        <script src="./vleapi.1.js"></script>
+        <script>
+            var is_ie8 = false;
+            var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ? true : false;
+        </script>
+    </head>
+    <!-- Set a unique ID (in body.id below) to save data against in either
+         VLE/Local Storage, can only be 20 chars long, a-z 0-9 -_ -->
+    <body id="default_mind_map_id">
+        <!--[if IE 8]>
+          <script>
+              is_ie8 = true;
+          </script>
+        <![endif]-->
+        <div class="menuCon" id="menuCon">
+            <ul class="visibleM" id="visibleM">
+                <li id="addNli"><a href="javascript:void(0);" title="Add - Add to selected box" id="addN" style="margin-top: 6px;">Add</a></li>
+                <li><a href="javascript:void(0);" title="Edit - Edit selected box" id="editN" style="margin-top: 6px;">Edit</a></li>
+                <li><a href="javascript:void(0);" title="Move - Move selected box" id="moveN" style="margin-top: 6px;">Move</a></li>
+                <li><a href="javascript:void(0);" title="Delete - Remove selected box" id="removeN" style="margin-top: 6px;">Delete</a></li>
+                <li><a href="javascript:void(0);" title="More - Show extra actions" id="menSh" style="margin-top: 6px;">More</a></li>
+                <li id="cancelM"><a href="javascript:void(0);" title="Cancel - Cancel move" id="cancelMove" style="margin-top: 6px;">Cancel</a></li>
+            </ul>
+            <div id="extraMenu">
+                <div id="mapTitle"></div>
+                <ul>
+                    <li><a href="javascript:void(0);" id="saveAsM" title="Copy/Save As">Copy/Save As</a></li>
+                    <li><a href="javascript:void(0);" id="saveAsIM" title="Save As Image">Save As Image</a></li>
+                    <li><a href="javascript:void(0);" id="printM" title="Print">Print</a></li>
+                    <li><a href="javascript:void(0);" id="renameM" title="Rename">Rename</a></li>
+                </ul>
+                <div id="mapTitle1"></div>
+                <ul>
+                    <li><a href="javascript:void(0);" id="openM" title="Open mind map">Open mind map</a></li>
+                    <li><a href="javascript:void(0);" id="createM" title="Create new mind map">Create new mind map</a></li>
+                    <li><a href="javascript:void(0);" id="deleteM" title="Delete mind map">Delete mind map</a></li>
+                    <li><a href="javascript:void(0);" id="helpM" title="Help - how to use this tool">Help - how to use this tool</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- to show as tree set class to "showTree" -->
+        <div id="canvasMimic" ></div>
+
+        <div id="sheeld"></div>
+        <div id="openOrNew">
+            <h1>Please select one option from below</h1>
+            <div class="">
+                <label for="openEx">Open existing mind map</label>
+                <select id="openEx"></select>
+                <div class="centerT">
+                    <button id="openOrNewO">Open</button>
+                </div>
+            </div>
+            <div class="ortext">OR</div>
+            <div class="">
+                <label for="newT1">Create new mind map - enter title</label>
+                <input type="text" value="" id="newT1" maxlength="255"/>
+                <div class="centerT">
+                    <button id="openOrNewN">Create</button>
+                </div>
+
+            </div>
+        </div>
+        <div id="open">
+            <h1>Please select mind map</h1>
+            <div >
+                <label for="openEx1">Open existing mind map</label>
+                <select id="openEx1"></select>
+                <div class="centerT">
+                    <button id="openC1">Open</button><button id="cancelC1" class="margin-l">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div id="openOrNew1">
+            <label for="nodeT">Edit text (<span id="charC">0</span> of 255 characters)</label>
+            <input type="text" value="" id="nodeT" maxlength="255" />
+            <div class="centerT">
+                <input type="button" id="saveB" value="Save" /><input type="button" id="cancelB" class="margin-l" value="Cancel"/>
+            </div>
+        </div>
+        <div id="new">
+            <label for="newT2">Title for new mind map</label>
+            <input type="text" value="" id="newT2" maxlength="255"/>
+            <div class="centerT">
+                <button id="saveB1">Save</button><button id="cancelB1" class="margin-l">Cancel</button>
+            </div>
+        </div>
+
+        <div id="editTitle">
+            <label for="newT4">Mind map title</label>
+            <input type="text" value="" id="newT4" maxlength="255"/>
+            <div class="centerT">
+                <button id="saveB4">Save</button><button id="cancelB4" class="margin-l">Cancel</button>
+            </div>
+        </div>
+
+        <div id="help">
+            <h1>How to use</h1>
+            <div class="centent">
+                <h2>Keyboard shortcuts</h2>
+                <p class="hanging">A – Add to list. Adds new box to list where selected box appears. Cannot add to main box</p>
+                <p class="hanging">I – Insert new box</p>
+                <p class="hanging">E – Edit selected box</p>
+                <p class="hanging">S – Go to menu</p>
+                <p class="hanging">M – Move selected text to another box</p>
+                <p class="hanging">Delete or D – Delete selected box</p>
+                <p class="hanging">Esc – Cancel edit</p>
+                <p class="hanging">up/down/left/right arrow – Move mind map</p>
+                <p class="hanging">Tab – Moves from one box to next. If box is hidden will make it visible.</p>
+                <br />
+                <br />
+                <h2>Mouse actions</h2>
+                <p class="hanging">Double click to edit</p>
+                <p class="hanging">Single click to select</p>
+                <p class="hanging">Click and drag to move box</p>
+                <p class="hanging">Click and drag into empty space to move whole map</p>
+            </div>
+            <button id="closeB">Close</button>
+        </div>
+        <div id="delete">
+            <h1>Select mind map to delete</h1>
+            <div class="centent" id="deletL">
+
+            </div>
+            <div class="centerT">
+                <button id="deleteM1">Delete</button><button id="closeM1" class="margin-l">Close</button>
+            </div>
+        </div>
+        <div id="print">
+            <label for="psize">Select page size</label>
+            <select id="psize">
+                <option value="A4">A4</option>
+                <option value="A3">A3</option>
+            </select>
+            <label for="pLand">Select page Layout</label>
+            <select id="pLand">
+                <option value="false">Portrait</option>
+                <option value="true">Landscape</option>
+            </select>
+            <div class="centerT">
+                <button id="printM1">Print</button><button id="canceM1" class="margin-l">Cancel</button>
+            </div>
+        </div>
+        <div id="saveImage">
+            <p>Enter picture width in PX or leave empty for auto</p>
+            <label for="newTpicW">Picture width in px</label>
+            <input type="text" value="" id="newTpicW" maxlength="6"/>
+            <div class="centerT">
+                <button id="saveI">Save</button><button id="cancelI" class="margin-l">Cancel</button>
+            </div>
+        </div>
+        <div id="printData"></div>
+        <script src="./js/main.js" type="text/javascript"></script>
+
+    </body>
+</html>

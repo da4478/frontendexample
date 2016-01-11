@@ -1,0 +1,3 @@
+Code example is located in "src" folder.
+
+To test code please run "SpecRunner.html"
